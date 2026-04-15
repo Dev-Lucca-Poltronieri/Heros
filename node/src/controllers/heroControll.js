@@ -37,7 +37,7 @@ exports.deleteHero = async (req, res) => {
     const { id } = req.params;
 
     try {
-        await db.query("UPDATE heros SET render = false WHERE id = (?);", [id])
+        await db.query("UPDATE heros SET render = 'false' WHERE id = (?)", [id])
         res.json({message: 'Hero was deleted'})
     } catch (error) {
         console.error(error);
@@ -52,7 +52,7 @@ exports.updateHero = async (req, res) => {
     const {status} = req.body;
 
     try {
-        await db.query("UPDATE heros SET status = (?) WHERE ID = (?) ", [status, id])
+        await db.query("UPDATE heros SET status = (?) WHERE id = (?) ", [status, id])
         res.status(201).json({message: '✅ Hero was updated'})
     } catch (error) {
         console.error(error)

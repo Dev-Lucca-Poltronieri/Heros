@@ -212,11 +212,12 @@ function App() {
 
       <div style={{ textAlign: 'center', display: 'grid' }}>
         <h1 className='underline text-2xl text-white'>Recrute Seu Time</h1>
-        <div className=' flex justify-center max-w gap-55'>
+        <div className=' flex justify-center max-w gap-40'>
           <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl' onClick={() => setFiltro("todos")}>Todos</button>
           <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl' onClick={() => setFiltro("Heroi")}>Heróis</button>
           <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl' onClick={() => setFiltro("EVO")}>Evoluções</button>
           <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl' onClick={() => setFiltro("Campeão")}>Campeões</button>
+          <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl'>Cadastrar</button>
 
         </div>
 

@@ -8,7 +8,7 @@ import { z } from 'zod';
 
 const schema = z.object({
     nome: z.string(),
-    classe: z.string(),
+    classe: z.string().min(3, "The Class Request 3 caracters"),
     status: z.string()
 })
 
@@ -34,8 +34,14 @@ function Formulario() {
     const handlecadastro = async (e) => {
         e.preventDefault();
 
+        const result = schema.safeParse(formData);
+        if (!result.success) {
+            return setErros(result.error.format());
+        }
+
+
         try {
-            const response = await fetch("http://localhost:3000/cadastrar", {
+            const response = await fetch("http://localhost:5000/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ nome, classe, status }),
@@ -43,7 +49,7 @@ function Formulario() {
 
             const data = await response.json();
             if (response.ok) {
-                setMensagem("Usuario cadastrado com sucesso!");
+                setMensagem("Usuario cadastrado com Sucesso!");
             } else {
                 setMensagem("Erro: " + data.erro);
             }
@@ -95,7 +101,7 @@ function Formulario() {
         <div className="flex items-center justify-center bg-white h-188 w-150 rounded-2xl">
             <form
 
-                onSubmit={handleSubmit}
+                onSubmit={handlecadastro}
                 style={formStyle}
                 onChange={handleChange}
             >
