@@ -135,6 +135,10 @@ function Card({ heroi, excluirHeroi }) {
         }
     }
 
+    const not_found = 'Imagem não Encontrada'
+
+
+
 
 
 
@@ -146,10 +150,10 @@ function Card({ heroi, excluirHeroi }) {
                 className={` ${corFundoCard()} border-4  rounded-xl p-4 m-2.5 shadow-md text-center w-70 h-165 ${corBorda()}`}>
 
                 <h2 className={` font-[cinzel] text-2xl  font-semibold ${corClasse()}`}>{heroi.classe}</h2>
-                <StatusBadge tipo={heroi.tipo} />
+                <StatusBadge tipo={heroi.status} />
 
                 <div className="text-white font-[orbitron]">Nivel: {nivel}</div>
-                <img src={heroi.imagem} alt={heroi.nome} style={{ width: '100%', borderRadius: '8px' }} />
+                <img src={heroi.imagem} alt={not_found} style={{ width: '100%', borderRadius: '8px' }} />
                 <p className={`${corNomePersonagem()} font-3xl font-[bangers]`}>{heroi.nome}</p>
 
 

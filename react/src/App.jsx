@@ -1,7 +1,7 @@
 import Formulario from './components/Formulario';
 
 import Card from './components/Card';
-import canhaoEVO from './assets/avatar/canhaoEVO.png';
+/*import canhaoEVO from './assets/avatar/canhaoEVO.png';
 import espiritoGeloEVO from './assets/avatar/espiritoGeloEVO.png';
 import esqueletosEVO from './assets/avatar/esqueletosEVO.png';
 import exercitoEVO from './assets/avatar/exercitoEVO.png';
@@ -18,167 +18,39 @@ import cavaleiroCampeao from './assets/avatar/cavaleiroCampeao.png';
 import esqueletoCampeao from './assets/avatar/esqueletoCampeao.png';
 import goblinCampeao from './assets/avatar/goblinCampeao.avif';
 import mongeCampeao from './assets/avatar/mongeCampeao.png';
-import principeCampeao from './assets/avatar/principeCampeao.avif';
+import principeCampeao from './assets/avatar/principeCampeao.avif';*/
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
 
-  const [listaHerois, setListaHerois] = useState([
-    {
-      id: 1,
-      nome: 'Canhão',
-      classe: 'EVO',
-      imagem: canhaoEVO,
-      tipo: "ausente"
-    },
-    {
-      id: 2,
-      nome: 'Espirito de Gelo',
-      classe: "EVO",
-      imagem: espiritoGeloEVO,
-      tipo: "offline"
-    },
-    {
-      id: 3,
-      nome: 'Esqueletos',
-      classe: 'EVO',
-      imagem: esqueletosEVO,
-      tipo: "online"
-    },
-    {
-      id: 4,
-      nome: 'Exercito de esqueletos',
-      classe: 'EVO',
-      imagem: exercitoEVO,
-      tipo: "online"
-    },
-    {
-      id: 5,
-      nome: 'Mega Cavaleiro',
-      classe: 'EVO',
-      imagem: megaCavaleiroEVO,
-      tipo: "ausente"
-    },
-    {
-      id: 6,
-      nome: 'Walkiria',
-      classe: 'EVO',
-      imagem: walkiriaEVO,
-      tipo: "offline"
-    },
-
-    {
-      id: 7,
-      nome: 'Arqueiro Mágico',
-      classe: 'Heroi',
-      imagem: arqueiroHeroi,
-      tipo: "offline"
-    },
-
-
-    {
-      id: 8,
-      nome: 'Barril de Barbaro',
-      classe: 'Heroi',
-      imagem: barrilBarbaroHeroi,
-      tipo: "ausente"
-    },
-
-
-    {
-      id: 9,
-      nome: 'Gigante',
-      classe: 'Heroi',
-      imagem: giganteHeroi,
-      tipo: "offline"
-    },
-
-
-    {
-      id: 10,
-      nome: 'Goblins',
-      classe: 'Heroi',
-      imagem: goblinsHeroi,
-      tipo: "online"
-    },
-
-
-    {
-      id: 11,
-      nome: 'Mini P.E.K.A',
-      classe: 'Heroi',
-      imagem: miniPEKAheroi,
-      tipo: "online"
-    },
-
-
-    {
-      id: 12,
-      nome: 'Mosqueteira',
-      classe: 'Heroi',
-      imagem: mosqueteiraHeroi,
-      tipo: "ausente"
-    },
-
-    {
-      id: 13,
-      nome: 'Rainha Arqueira',
-      classe: 'Campeão',
-      imagem: arqueiraCampeao,
-      tipo: "online"
-    },
-
-
-    {
-      id: 14,
-      nome: 'Cavaleiro',
-      classe: 'Campeão',
-      imagem: cavaleiroCampeao,
-      tipo: "ausente"
-    },
-
-
-    {
-      id: 15,
-      nome: 'Rei Esqueleto',
-      classe: 'Campeão',
-      imagem: esqueletoCampeao,
-      tipo: "offline"
-    },
-
-
-    {
-      id: 16,
-      nome: 'Goblin Stein',
-      classe: 'Campeão',
-      imagem: goblinCampeao,
-      tipo: "online"
-    },
-
-
-    {
-      id: 17,
-      nome: 'Monge',
-      classe: 'Campeão',
-      imagem: mongeCampeao,
-      tipo: "online"
-    },
-
-
-    {
-      id: 18,
-      nome: 'Pequeno Príncipe',
-      classe: 'Campeão',
-      imagem: principeCampeao,
-      tipo: "ausente"
-    },
+  useEffect(() => {
+    alert("Bem-vindo ao projeto Heros!")
+  }, [])
 
 
 
 
 
-  ]);
+
+  const [listaHerois, setListaHerois] = useState([]);
+
+
+  useEffect(() => {
+    async function buscarHerois() {
+      try {
+        const res = await fetch("http://localhost:5000/getHero");
+        const data = await res.json();
+
+
+        setListaHerois(data); // 🔥 aqui entra o banco
+      } catch (error) {
+        console.error("Erro ao buscar heróis:", error);
+      }
+    }
+
+    buscarHerois();
+  }, []);
 
 
 
@@ -200,6 +72,8 @@ function App() {
     if (filtro === "todos") return true;
     return heroi.classe === filtro;
   });
+
+
 
   return (
     <>
@@ -236,7 +110,10 @@ function App() {
       <Formulario />
 
     </>
-  )
+  );
+
+
+
 }
 
 export default App;
