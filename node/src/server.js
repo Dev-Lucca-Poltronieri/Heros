@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json())
 
 app.post('/register', db.heroRegister)
-app.delete('/delete/:id', db.deleteHero)
+app.patch('/delete/:id', db.deleteHero)
 app.patch('/update/:id', db.updateHero)
 app.get('/getHero', db.getHero)
 

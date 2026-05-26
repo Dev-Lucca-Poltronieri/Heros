@@ -1,6 +1,7 @@
 import { useState } from "react";
 import StatusBadge from "./StatusBadge";
 
+import defaultImage from "../assets/avatar/defaultImage.png"
 
 
 function Card({ heroi, excluirHeroi }) {
@@ -135,9 +136,8 @@ function Card({ heroi, excluirHeroi }) {
         }
     }
 
-    const not_found = 'Imagem não Encontrada'
 
-
+    const imageNotFound = 'Image Not Found'
 
 
 
@@ -153,7 +153,10 @@ function Card({ heroi, excluirHeroi }) {
                 <StatusBadge tipo={heroi.status} />
 
                 <div className="text-white font-[orbitron]">Nivel: {nivel}</div>
-                <img src={heroi.imagem} alt={not_found} style={{ width: '100%', borderRadius: '8px' }} />
+                <img
+                    src={heroi.imagem ? `/avatar/${heroi.imagem}` : defaultImage}
+                    alt={imageNotFound}
+                />
                 <p className={`${corNomePersonagem()} font-3xl font-[bangers]`}>{heroi.nome}</p>
 
 

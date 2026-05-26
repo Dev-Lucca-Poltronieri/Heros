@@ -35,16 +35,27 @@ exports.heroRegister = async (req, res) => {
 exports.deleteHero = async (req, res) => {
 
     const { id } = req.params;
-
     try {
-        await db.query("UPDATE heros SET render = 'false' WHERE id = (?)", [id])
-        res.json({message: 'Hero was deleted'})
+
+        await db.query(
+            "UPDATE heros SET render = ? WHERE id = ?",
+            [false, id]
+        );
+
+        res.status(200).json({
+            message: 'Hero was Deleted'
+        });
+
     } catch (error) {
+
         console.error(error);
-        return res.status(500).error.json()
-        
+
+        return res.status(500).json({
+            error: 'Server Error'
+        });
+
     }
-   
+
 }
 
 exports.updateHero = async (req, res) => {

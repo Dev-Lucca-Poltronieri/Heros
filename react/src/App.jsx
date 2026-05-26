@@ -24,30 +24,25 @@ import { useEffect, useState } from 'react';
 
 function App() {
 
-  useEffect(() => {
-    alert("Bem-vindo ao projeto Heros!")
-  }, [])
-
-
-
-
-
-
   const [listaHerois, setListaHerois] = useState([]);
 
 
   useEffect(() => {
+
     async function buscarHerois() {
+
       try {
         const res = await fetch("http://localhost:5000/getHero");
         const data = await res.json();
 
 
-        setListaHerois(data); // 🔥 aqui entra o banco
+        setListaHerois(data); //  aqui entra o banco
       } catch (error) {
         console.error("Erro ao buscar heróis:", error);
       }
     }
+
+    alert("Bem-vindo ao projeto Heros!")
 
     buscarHerois();
   }, []);
@@ -56,9 +51,29 @@ function App() {
 
   const [filtro, setFiltro] = useState("todos");
 
-  const excluirHeroi = (id) => {
-    setListaHerois(listaHerois.filter(heroi => heroi.id !== id));
-  };
+  async function excluirHeroi(id) {
+
+    try {
+
+      const res = await fetch(`http://localhost:5000/delete/${id}`, {
+        method: "PATCH"
+      });
+
+      const data = await res.json();
+
+      console.log(data);
+
+      setListaHerois(prev =>
+        prev.filter(heroi => heroi.id !== id)
+      );
+
+    } catch (error) {
+
+      console.error("Erro ao excluir herói:", error);
+
+    }
+
+  }
 
   const containerStyle = {
     display: 'grid',
