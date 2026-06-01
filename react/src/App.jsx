@@ -25,27 +25,43 @@ import { useEffect, useState } from 'react';
 function App() {
 
   const [listaHerois, setListaHerois] = useState([]);
+  const [showForm, setShowForm] = useState(false);
 
 
-  useEffect(() => {
-
-    async function buscarHerois() {
-
-      try {
-        const res = await fetch("http://localhost:5000/getHero");
-        const data = await res.json();
-
-
-        setListaHerois(data); //  aqui entra o banco
-      } catch (error) {
-        console.error("Erro ao buscar heróis:", error);
+  const Teste = () => { // melhor para chamar mais de uma função
+    useEffect(() => {
+      const dadosFetch = async () => {
+        try {
+          const resultado = await buscarHerois();
+          setListaHerois(resultado);
+        } catch (error) {
+          console.error("Erro!");
+        }
       }
+
+      dadosFetch();
+    }, []);
+  }
+
+  async function buscarHerois() { // se chamar essa direto, fica chamando toda hora
+    try {
+      const res = await fetch("http://localhost:5000/getHero");
+      const data = await res.json();
+      return data;
+      //setListaHerois(data); //  aqui entra o banco
+    } catch (error) {
+      console.error("Erro ao buscar heróis:", error);
     }
+  }
 
-    alert("Bem-vindo ao projeto Heros!")
 
-    buscarHerois();
-  }, []);
+  Teste();
+
+
+
+
+
+
 
 
 
@@ -90,8 +106,13 @@ function App() {
 
 
 
+
+
   return (
+
     <>
+
+
 
 
 
@@ -102,27 +123,64 @@ function App() {
       <div style={{ textAlign: 'center', display: 'grid' }}>
         <h1 className='underline text-2xl text-white'>Recrute Seu Time</h1>
         <div className=' flex justify-center max-w gap-40'>
-          <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl' onClick={() => setFiltro("todos")}>Todos</button>
-          <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl' onClick={() => setFiltro("Heroi")}>Heróis</button>
-          <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl' onClick={() => setFiltro("EVO")}>Evoluções</button>
-          <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl' onClick={() => setFiltro("Campeão")}>Campeões</button>
-          <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl'>Cadastrar</button>
+          <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl'
+            onClick={() => {
+              setFiltro("todos");
+              setShowForm(false);
+            }}
+          >
+            Todos
+          </button>
+
+          <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl'
+            onClick={() => {
+              setFiltro("Heroi");
+              setShowForm(false);
+            }}
+          >
+            Heróis
+          </button>
+
+          <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl'
+            onClick={() => {
+              setFiltro("EVO");
+              setShowForm(false);
+            }}
+          >
+            Evoluções
+          </button>
+
+          <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl'
+            onClick={() => {
+              setFiltro("Campeão");
+              setShowForm(false);
+            }}
+          >
+            Campeões
+          </button>
+          <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl'
+            onClick={() => setShowForm(prev => !prev)}>Cadastrar</button>
 
         </div>
 
 
-        <div style={containerStyle}>
-          {heroisFiltrados.map((heroi) => (
-            <Card
-              key={heroi.id}
-              heroi={heroi}
-              excluirHeroi={excluirHeroi}
-            />
-          ))}
-        </div>
+
+        {!showForm && (
+          <div style={containerStyle}>
+            {heroisFiltrados.map((heroi) => (
+              <Card
+                key={heroi.id}
+                heroi={heroi}
+                excluirHeroi={excluirHeroi}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
-      <Formulario />
+      {showForm && <Formulario />}
+
+
 
     </>
   );
