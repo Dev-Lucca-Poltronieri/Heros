@@ -1,9 +1,10 @@
 import { useState } from "react";
 
 
+
 function Login() {
     const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
+    const [password, setPassword] = useState("");
     const [mensagem, setMensagem] = useState("");
 
     const handleLogin = async (e) => {
@@ -11,15 +12,17 @@ function Login() {
 
 
         try {
-            const response = await fetch("http://localhost:3000/login", {
+            const response = await fetch("http://localhost:5000/saveUser", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify
+                body: JSON.stringify({
+                    email, password
+                })
             });
             const data = await response.json();
 
             if (response.ok) {
-                setMensagem(`bem vindo, ${data.usuario.nome}`);
+                setMensagem(`Bem vindo!`);
             } else {
                 setMensagem(data.mensagem)
             }
@@ -30,27 +33,63 @@ function Login() {
 
 
 
+
+
     return (
 
-        <div className="flex min-h-screen items-center justify-center bg-gray-100">
-            <div className=" w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md" >
-                <h2 className="text-2xl font-bold text-center text-gray-800">Login</h2>
-                <form className="space-y-4">
+        <div className="flex min-h-screen items-center justify-center">
+            <div
+                className=" w-full max-w-md p-8 space-y-6 bg-blue-300 rounded-lg shadow-md">
+                <h2 className="text-3xl font-bold text-center text-gray-900">
+                    Login
+                </h2>
+
+                <form
+                onSubmit={handleLogin} 
+                className="space-y-5">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label className="block text-sm font-medium text-gray-900 mb-1">
                             Email
                         </label>
-                        <input type="email" required className="w-full px-3 py-2 my-1 border rounded-md focus:ring-blue-500 focus:border-blue-500" />
+
+                        <input
+                            name="email"
+                            type="email"
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className=" w-full px-4 py-2 rounded-md border border-slate-300  bg-white focus:outline-none focus:border-gray-900 focus:border-2 transition-colors"/>
+                            
                     </div>
 
                     <div>
-                        <label>
+                        <label className="block text-sm font-medium text-gray-900 mb-1">
                             Senha
                         </label>
-                        <input type="password" required className="w-full px-3 py-2 my-1 border rounded-md focus:ring-blue-500 focus:border-blue-500" />
+
+                        <input
+                        name="password"
+                            type="password"
+                            required
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className=" w-full px-4 py-2 rounded-md border border-slate-300 bg-white focus:outline-none focus:border-gray-900 focus:border-2 transition-colors"/>
                     </div>
-                    <button type="submit" className="text-white bg-blue-600 py-2 w-full rounded-md hover:bg-blue-700 transition-colors">Entrar</button>
+
+                    <button
+                        type="submit"
+                        className=" w-full py-2.5 rounded-md bg-blue-100 text-gray-900 font-semibold hover:bg-blue-200 transition-colors" >
+                        Entrar
+                    </button>
                 </form>
+
+                <div className="flex justify-center mt-4">
+                    <a
+                        href="Cadastro.jsx"
+                        className=" text-gray-900 hover:text-gray-700 font-medium transition-colors">
+                        Não possui Cadastro? Fazer Cadastro
+                    </a>
+                </div>
 
                 {mensagem && (
                     <p className={`text-center text-sm ${mensagem.includes("Bem vindo!") ? "text-green-600" : "text-red-600"}`}>{mensagem}</p>

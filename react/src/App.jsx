@@ -1,6 +1,7 @@
 import Formulario from './components/Formulario';
-
+import Cadastro from './components/Cadastro';
 import Card from './components/Card';
+import Login from './components/Login';
 /*import canhaoEVO from './assets/avatar/canhaoEVO.png';
 import espiritoGeloEVO from './assets/avatar/espiritoGeloEVO.png';
 import esqueletosEVO from './assets/avatar/esqueletosEVO.png';
@@ -61,10 +62,6 @@ function App() {
 
 
 
-
-
-
-
   const [filtro, setFiltro] = useState("todos");
 
   async function excluirHeroi(id) {
@@ -116,7 +113,7 @@ function App() {
 
 
 
-      <div style={{ textAlign: 'center' }}>
+      {/*<div style={{ textAlign: 'center' }}>
         <h1 className='underline text-3xl text-white'>Seleção de Heróis</h1>
       </div>
 
@@ -180,6 +177,8 @@ function App() {
 
       {showForm && <Formulario />}
 
+        <Cadastro />*/}
+        <Login />
 
 
     </>
