@@ -27,7 +27,7 @@ function Login() {
                 setMensagem(data.mensagem)
             }
         } catch (error) {
-            setMensagem("Erro com o servidor")
+            console.error(error)
         }
     }
 
@@ -39,16 +39,16 @@ function Login() {
 
         <div className="flex min-h-screen items-center justify-center">
             <div
-                className=" w-full max-w-md p-8 space-y-6 bg-blue-300 rounded-lg shadow-md">
-                <h2 className="text-3xl font-bold text-center text-gray-900">
+                className=" w-full max-w-md p-8 space-y-6 backdrop-blur-md text-white border-2 rounded-lg shadow-md">
+                <h2 className="text-3xl font-bold text-center color-white">
                     Login
                 </h2>
 
                 <form
-                onSubmit={handleLogin} 
-                className="space-y-5">
+                    onSubmit={handleLogin}
+                    className="space-y-5">
                     <div>
-                        <label className="block text-sm font-medium text-gray-900 mb-1">
+                        <label className="block text-sm color-white font-medium  mb-1">
                             Email
                         </label>
 
@@ -58,22 +58,22 @@ function Login() {
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className=" w-full px-4 py-2 rounded-md border border-slate-300  bg-white focus:outline-none focus:border-gray-900 focus:border-2 transition-colors"/>
-                            
+                            className=" w-full color-white px-4 py-2 rounded-md border border-slate-300  bg-white focus:outline-none focus:border-gray-900 focus:border-2 transition-colors" />
+
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-900 mb-1">
+                        <label className="block color-white text-sm font-medium mb-1">
                             Senha
                         </label>
 
                         <input
-                        name="password"
+                            name="password"
                             type="password"
                             required
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className=" w-full px-4 py-2 rounded-md border border-slate-300 bg-white focus:outline-none focus:border-gray-900 focus:border-2 transition-colors"/>
+                            className="color-white w-full px-4 py-2 rounded-md border border-slate-300 bg-white focus:outline-none focus:border-gray-900 focus:border-2 transition-colors" />
                     </div>
 
                     <button
@@ -86,7 +86,7 @@ function Login() {
                 <div className="flex justify-center mt-4">
                     <a
                         href="Cadastro.jsx"
-                        className=" text-gray-900 hover:text-gray-700 font-medium transition-colors">
+                        className="color-white hover:-translate-y-1 transition-all font-medium">
                         Não possui Cadastro? Fazer Cadastro
                     </a>
                 </div>

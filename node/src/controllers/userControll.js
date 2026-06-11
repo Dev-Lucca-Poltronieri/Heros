@@ -2,12 +2,15 @@ const db = require('../config/db');
 const { z } = require('zod');
 
 const userSchema = z.object({
-    email: z.string("O e-mail deve ser uma string")
-        .email("E-mail inválido"),
+    email: z.string()
+        .email("Invalid E-mail, check the '@' "),
 
-    password: z.string("A senha deve ser uma string")
-        .min(8, "A senha deve ter no mínimo 8 caracteres")
-        .regex( /^(?=.*[A-Za-z])(?=.*\d).+$/,  "A senha deve conter pelo menos uma letra e um número"),
+    password: z.string()
+        .min(8, "You need to have 8 caracters in you password")
+        .regex( /^(?=.*[A-Za-z])(?=.*\d).+$/,  "You need to put letters and numbers"),
+
+    name: z.string("Invalid name") 
+            .min(3, "You need to have 3 letters in you name"),
     
 })
 
