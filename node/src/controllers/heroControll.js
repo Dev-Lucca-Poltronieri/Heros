@@ -8,7 +8,7 @@ const heroSchema = z.object({
     // imagem: z.string()
 })
 
-exports.heroRegister = async (req, res) => {
+exports.heroRegister = async (req, res) => { // precisa inserir a fk do usuario tambem - pegar do local storage
     const result = heroSchema.safeParse(req.body);
 
     if (!result.success) {

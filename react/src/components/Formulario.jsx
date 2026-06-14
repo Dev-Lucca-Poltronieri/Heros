@@ -41,20 +41,22 @@ function Formulario() {
 
 
         try {
-            const response = await fetch("http://localhost:5000/register", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ nome, classe, status }),
-            });
+            const { data } = await axios.post(
+                "http://localhost:5000/register",
+                {
+                    nome,
+                    classe,
+                    status
+                }
+            );
 
-            const data = await response.json();
-            if (response.ok) {
-                setMensagem("Usuario cadastrado com Sucesso!");
-            } else {
-                setMensagem("Erro: " + data.erro);
-            }
+            setMensagem("Hero registered ✅"); // mensagem precisa vir do back - olhar no login/cadastro
+
         } catch (error) {
-            error.setMensagem("Erro ao conectar com o servidor!");
+            setMensagem(
+                error.response?.data?.erro ||
+                "Erro ao conectar com o servidor!"
+            );
         }
     };
 
