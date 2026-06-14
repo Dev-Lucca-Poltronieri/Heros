@@ -1,114 +1,147 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import axios from "axios";
 
-function Cadastro() {
-    const [nome, setNome] = useState("");
+
+
+function Cadastro({setFirstComponent}) {
     const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
-    const [classe, setClasse] = useState("");
+    const [password, setPassword] = useState("");
     const [mensagem, setMensagem] = useState("");
+    const [name, setName] = useState("");
+    const [errors, setErrors] = useState({});
 
-    const handlecadastro = async (e) => {
-        e.preventDefault();
+
+
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
 
         try {
-            const response = await fetch("http://localhost:3000/cadastrar", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ nome, classe }),
-            });
+            const { data } = await axios.post(
+                "http://localhost:5000/saveUser",
+                {
+                    name,
+                    email,
+                    password
+                }
+            );
+            setErrors({})
+            setMensagem(data.message);
 
-            const data = await response.json();
-            if (response.ok) {
-                setMensagem("Usuario cadastrado com sucesso!");
-            } else {
-                setMensagem("Erro: " + data.erro);
-            }
         } catch (error) {
-            error.setMensagem("Erro ao conectar com o servidor!");
+            if (error.response?.data?.error) {
+                setErrors(error.response.data.error);
+            }
         }
-    };
+    }
+
+
+
+
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
-            <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md border border-gray-200">
-                <div className="text-center">
-                    <h2 className="text-3xl front-extrabold text-gray-900">
-                        Criar Conta
-                    </h2>
-                    <p className="mt-2 text-sm text-gray-600">
-                        Junte-se a nós para começar
-                    </p>
-                </div>
 
-                <form className="space-y-4" onSubmit={{ handlecadastro }}>
+        <div className="flex min-h-screen items-center justify-center">
+            <div
+                className=" w-full max-w-md p-8 space-y-6 backdrop-blur-md text-white border-2 rounded-lg shadow-md hover:border-blue-300  transition-all group">
+                <h2 className="text-3xl font-bold text-center color-white group-hover:text-blue-300 transition-all">
+                    Cadastro
+                </h2>
+                <h4 className=" text-center color-white">Junte-se a nós para começar</h4>
+
+                <form
+                    onSubmit={handleSubmit}
+                    className="space-y-5">
+
+
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">
-                            Nome Completo
+                        <label className="block text-sm text-white font-medium mb-1">
+                            Nome
                         </label>
+
                         <input
+                            name="nome"
                             type="text"
                             required
-                            placeholder="Lucca Poltronieri"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-                            value={nome}
-                            onChange={(e) => setNome(e.target.value)}
-                        />
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className=" w-full text-black px-4 py-2 rounded-md border border-slate-300  bg-white focus:outline-none focus:border-gray-900 focus:border-2 transition-colors" />
+
+                        {errors.name?._errors?.[0] && (
+                            <p className="text-red-600  mt-1">
+                                {errors.name._errors[0]}
+                            </p>
+                        )}
                     </div>
+
+
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">
-                            E-Mail
+                        <label className="block text-sm text-white font-medium mb-1">
+                            Email
                         </label>
+
                         <input
+                            name="email"
                             type="email"
                             required
-                            placeholder="exemplo@email.com"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                        />
+                            className=" w-full text-black px-4 py-2 rounded-md border border-slate-300  bg-white focus:outline-none focus:border-gray-900 focus:border-2 transition-colors" />
+
+                        {errors.email?._errors?.[0] && (
+                            <p className="text-red-500 text-sm mt-1">
+                                {errors.email._errors[0]}
+                            </p>
+                        )}
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label className="block color-white text-sm font-medium mb-1">
                             Senha
                         </label>
+
                         <input
+                            name="password"
                             type="password"
                             required
-                            placeholder="**********"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-                            value={senha}
-                            onChange={(e) => setSenha(e.target.value)}
-                        />
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="text-black w-full px-4 py-2 rounded-md border border-slate-300 bg-white focus:outline-none focus:border-gray-900 focus:border-2 transition-colors" />
+                        
+                        {errors.password?._errors?.[0] && (
+                            <p className="text-red-500 text-sm mt-1">
+                                {errors.password._errors[0]}
+                            </p>
+                        )}
                     </div>
 
                     <button
                         type="submit"
-                        className="w-full py-2.5 text-white bg-blue-600 rounded-md font-semibold hover:bg-blue-700 active:scale-95 transition-all shadow-lg"
-                    >
+                        className=" w-full py-2.5 rounded-md bg-blue-100 text-gray-900 font-semibold hover:bg-blue-200 transition-colors" >
                         Cadastrar
                     </button>
                 </form>
 
-                {mensagem && (
-                    <div
-                        className={`p-3 rounded-md text-center text-sm font-medium 
-                ${mensagem.includes("Sucesso") ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}
-                    >
-                        {mensagem}
-                    </div>
-                )}
-                <div className="textx-center">
-                    <p className="text-sm text-gray-500">
-                        Já possui uma conta?{" "}
-                        <a href="#" className="text-blue-600 hover:underline">
-                            Faça agora o Login
-                        </a>{" "}
-                    </p>
+                <div className="flex justify-center mt-4">
+                    <button
+                        type="button"
+                        onClick={() => setFirstComponent('login')}
+                        className="color-white hover:-translate-y-1 font-medium hover:text-blue-100 transition-all">
+                        Fazer Login
+                    </button>
                 </div>
+
+             
+
+                {mensagem && (
+                    <p className={`text-center text-green-600`}>{mensagem}</p>
+                )}
             </div>
+
         </div>
-    );
-}
+
+    )
+};
 
 export default Cadastro;

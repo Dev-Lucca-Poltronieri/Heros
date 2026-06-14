@@ -2,6 +2,7 @@ import Formulario from './components/Formulario';
 import Cadastro from './components/Cadastro';
 import Card from './components/Card';
 import Login from './components/Login';
+ import axios from "axios";
 /*import canhaoEVO from './assets/avatar/canhaoEVO.png';
 import espiritoGeloEVO from './assets/avatar/espiritoGeloEVO.png';
 import esqueletosEVO from './assets/avatar/esqueletosEVO.png';
@@ -27,6 +28,24 @@ function App() {
 
   const [listaHerois, setListaHerois] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [firstComponent, setFirstComponent] = useState('login')
+
+
+
+  async function buscarHerois() {
+  try {
+    const userId = localStorage.getItem("userId");
+
+    const { data } = await axios.get(
+      `http://localhost:5000/getHero/${userId}`
+    );
+
+    return data;
+
+  } catch (error) {
+    console.error("Erro ao buscar heróis:", error);
+  }
+}
 
 
   const Teste = () => { // melhor para chamar mais de uma função
@@ -42,17 +61,6 @@ function App() {
 
       dadosFetch();
     }, []);
-  }
-
-  async function buscarHerois() { // se chamar essa direto, fica chamando toda hora
-    try {
-      const res = await fetch("http://localhost:5000/getHero");
-      const data = await res.json();
-      return data;
-      //setListaHerois(data); //  aqui entra o banco
-    } catch (error) {
-      console.error("Erro ao buscar heróis:", error);
-    }
   }
 
 
@@ -102,7 +110,13 @@ function App() {
   });
 
 
+  if (firstComponent === 'login') {
+    return <Login setFirstComponent={setFirstComponent} />;
+  }
 
+  if (firstComponent === 'cadastro') {
+    return <Cadastro setFirstComponent={setFirstComponent} />;
+  }
 
 
   return (
@@ -113,7 +127,13 @@ function App() {
 
 
 
-      {/*<div style={{ textAlign: 'center' }}>
+
+
+
+
+
+
+      <div style={{ textAlign: 'center' }}>
         <h1 className='underline text-3xl text-white'>Seleção de Heróis</h1>
       </div>
 
@@ -156,7 +176,7 @@ function App() {
             Campeões
           </button>
           <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl'
-            onClick={() => setShowForm(prev => !prev)}>Cadastrar</button>
+            onClick={() => setShowForm(prev => !prev)}>Novo</button>
 
         </div>
 
@@ -177,8 +197,7 @@ function App() {
 
       {showForm && <Formulario />}
 
-        <Cadastro />*/}
-        <Login />
+
 
 
     </>

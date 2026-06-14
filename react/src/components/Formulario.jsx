@@ -105,7 +105,7 @@ function Formulario() {
                 style={formStyle}
                 onChange={handleChange}
             >
-                <h1 className=' font-bold flex w-full justify-center text-3xl py-5 text-red-900'>Cadastro</h1>
+                <h1 className=' font-bold flex w-full justify-center text-3xl py-5 text-red-900'>Novo Herói</h1>
                 <label className='flex w-full justify-center text-2xl mt-5 text-red-900'>Nome</label>
                 <input
                     type="text"

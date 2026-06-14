@@ -72,13 +72,16 @@ exports.updateHero = async (req, res) => {
 }
 
 exports.getHero = async (req, res) => {
+    const {userId} = req.params
     try {
-        const [rows] = await db.query("SELECT id, nome, classe, status FROM heros WHERE render = true ")
+        const [rows] = await db.query("SELECT id, nome, classe, status FROM heros WHERE render = true and fk_usuarioId = ? ", [userId])
 
         return res.status(200).json(rows)
     } catch (error) {
         console.error(error);
-        return res.status(500).error.json()
+        return res.status(500).error.json({
+            error: 'Server error'
+        })
         
     }
     

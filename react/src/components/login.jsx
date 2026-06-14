@@ -1,33 +1,34 @@
 import { useState } from "react";
+import axios from "axios";
 
 
-
-function Login() {
+function Login({ setFirstComponent }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [mensagem, setMensagem] = useState("");
+    const [error, setErrors] = useState("");
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-
+    const handleSubmit = async (e) => {
+        e.preventDefault()
 
         try {
-            const response = await fetch("http://localhost:5000/saveUser", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    email, password
-                })
-            });
-            const data = await response.json();
+            const { data } = await axios.post(
+                "http://localhost:5000/validateUser",
+                {
 
-            if (response.ok) {
-                setMensagem(`Bem vindo!`);
-            } else {
-                setMensagem(data.mensagem)
-            }
+                    email,
+                    password
+                }
+            );
+            setErrors('')
+            localStorage.setItem("userId", data.userId);
+            setFirstComponent("home");
+
+
+
         } catch (error) {
-            console.error(error)
+            setErrors(
+                error.response?.data?.mensagem || "Invalid Login"
+            );
         }
     }
 
@@ -39,16 +40,16 @@ function Login() {
 
         <div className="flex min-h-screen items-center justify-center">
             <div
-                className=" w-full max-w-md p-8 space-y-6 backdrop-blur-md text-white border-2 rounded-lg shadow-md">
-                <h2 className="text-3xl font-bold text-center color-white">
+                className=" w-full max-w-md p-8 space-y-6 backdrop-blur-md text-white border-2 rounded-lg shadow-md hover:border-blue-300  transition-all group">
+                <h2 className="text-3xl font-bold text-center color-white group-hover:text-blue-300 transition-all">
                     Login
                 </h2>
 
                 <form
-                    onSubmit={handleLogin}
+                    onSubmit={handleSubmit}
                     className="space-y-5">
                     <div>
-                        <label className="block text-sm color-white font-medium  mb-1">
+                        <label className="block text-sm text-white font-medium mb-1">
                             Email
                         </label>
 
@@ -58,7 +59,7 @@ function Login() {
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className=" w-full color-white px-4 py-2 rounded-md border border-slate-300  bg-white focus:outline-none focus:border-gray-900 focus:border-2 transition-colors" />
+                            className=" w-full text-black px-4 py-2 rounded-md border border-slate-300  bg-white focus:outline-none focus:border-gray-900 focus:border-2 transition-colors" />
 
                     </div>
 
@@ -73,26 +74,28 @@ function Login() {
                             required
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="color-white w-full px-4 py-2 rounded-md border border-slate-300 bg-white focus:outline-none focus:border-gray-900 focus:border-2 transition-colors" />
+                            className="text-black w-full px-4 py-2 rounded-md border border-slate-300 bg-white focus:outline-none focus:border-gray-900 focus:border-2 transition-colors" />
                     </div>
 
                     <button
                         type="submit"
+                        //onClick={() => setFirstComponent('home')}
                         className=" w-full py-2.5 rounded-md bg-blue-100 text-gray-900 font-semibold hover:bg-blue-200 transition-colors" >
                         Entrar
                     </button>
                 </form>
 
                 <div className="flex justify-center mt-4">
-                    <a
-                        href="Cadastro.jsx"
+                    <button
+                        type="button"
+                        onClick={() => setFirstComponent('cadastro')}
                         className="color-white hover:-translate-y-1 transition-all font-medium">
                         Não possui Cadastro? Fazer Cadastro
-                    </a>
+                    </button>
                 </div>
 
-                {mensagem && (
-                    <p className={`text-center text-sm ${mensagem.includes("Bem vindo!") ? "text-green-600" : "text-red-600"}`}>{mensagem}</p>
+                {error && (
+                    <p className={`text-center text-red-600`}>{error}</p>
                 )}
             </div>
         </div>

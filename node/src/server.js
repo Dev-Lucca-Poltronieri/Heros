@@ -11,9 +11,10 @@ app.use(express.json())
 app.post('/register', heroControll.heroRegister)
 app.patch('/delete/:id', heroControll.deleteHero)
 app.patch('/update/:id', heroControll.updateHero)
-app.get('/getHero', heroControll.getHero)
+app.get('/getHero/:userId', heroControll.getHero)
 
 app.post('/saveUser', userControll.saveUser)
+app.post('/validateUser', userControll.validateUser)
 
 app.listen(5000, () => console.log('🚀 Servidor rodando na porta 5000'));
 
