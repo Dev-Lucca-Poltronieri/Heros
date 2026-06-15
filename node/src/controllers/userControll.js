@@ -30,7 +30,7 @@ exports.saveUser = async (req, res) => {
 
 
     try {
-        await db.query("INSERT INTO users (email, password, name) VALUES (?, ?, ?)", [email, password, name])
+        await db.query("INSERT INTO users (nome, email, senha) VALUES (?, ?, ?)", [ name, email, password,]) // trocar de acordo com o banco
         res.status(201).json({ message: ' You were registered ✅ ' })
 
     } catch (error) {
@@ -47,7 +47,7 @@ exports.validateUser = async (req, res) => {
 
     try {
         const [users] = await db.query(
-            'select * from users where email = ? and password = ?',
+            'select * from users where email = ? and senha = ?', // trocar de acordo com o banco
             [email, password]
         )
 

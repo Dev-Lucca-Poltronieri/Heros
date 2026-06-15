@@ -6,6 +6,7 @@ const heroSchema = z.object({
     classe: z.string().min(3, "The 'class' Request min. 3  lyrics . Needs to be a string"),
     status: z.string("The 'status' Needes to be a string"),
     // imagem: z.string()
+    userId: z.coerce.number()
 })
 
 exports.heroRegister = async (req, res) => { // precisa inserir a fk do usuario tambem - pegar do local storage
@@ -17,10 +18,12 @@ exports.heroRegister = async (req, res) => { // precisa inserir a fk do usuario 
         });
     }
 
-    const {nome, classe, status, imagem} = result.data;
+    const {nome, classe, status, imagem, userId} = result.data;
+
+
 
     try {
-        await db.query("INSERT INTO heros (nome, classe, status, imagem) VALUES (?, ?, ?, ?)", [nome, classe, status, imagem])
+        await db.query("INSERT INTO heros (nome, classe, status, imagem, fk_usuarioId) VALUES (?, ?, ?, ?, ?)", [nome, classe, status, imagem, userId]) //verificar de acordo com o banco
         res.status(201).json({message: '✅ Hero registered successfully'})
         
     } catch (error) {
@@ -78,10 +81,9 @@ exports.getHero = async (req, res) => {
 
         return res.status(200).json(rows)
     } catch (error) {
-        console.error(error);
-        return res.status(500).error.json({
-            error: 'Server error'
-        })
+      return res.status(500).json({
+    error: 'Server error'
+});
         
     }
     

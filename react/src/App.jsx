@@ -2,7 +2,7 @@ import Formulario from './components/Formulario';
 import Cadastro from './components/Cadastro';
 import Card from './components/Card';
 import Login from './components/Login';
- import axios from "axios";
+import axios from "axios";
 /*import canhaoEVO from './assets/avatar/canhaoEVO.png';
 import espiritoGeloEVO from './assets/avatar/espiritoGeloEVO.png';
 import esqueletosEVO from './assets/avatar/esqueletosEVO.png';
@@ -33,38 +33,40 @@ function App() {
 
 
   async function buscarHerois() {
-  try {
-    const userId = localStorage.getItem("userId");
+    try {
+      const userId = localStorage.getItem("userId");
 
-    const { data } = await axios.get(
-      `http://localhost:5000/getHero/${userId}`
-    );
+      const { data } = await axios.get(
+        `http://localhost:5000/getHero/${userId}`
+      );
 
-    return data;
+      return data;
 
-  } catch (error) {
-    console.error("Erro ao buscar heróis:", error);
+    } catch (error) {
+      console.error("Erro ao buscar heróis:", error);
+    }
   }
-}
 
 
-  const Teste = () => { // melhor para chamar mais de uma função
-    useEffect(() => {
-      const dadosFetch = async () => {
-        try {
-          const resultado = await buscarHerois();
-          setListaHerois(resultado);
-        } catch (error) {
-          console.error("Erro!");
-        }
+
+  useEffect(() => {
+    const dadosFetch = async () => {
+      try {
+        const resultado = await buscarHerois();
+        setListaHerois(resultado);
+      } catch (error) {
+        console.error(error);
       }
+    }
 
-      dadosFetch();
-    }, []);
-  }
+    dadosFetch();
+  }, []);
 
 
-  Teste();
+
+
+
+
 
 
 
@@ -122,16 +124,6 @@ function App() {
   return (
 
     <>
-
-
-
-
-
-
-
-
-
-
 
       <div style={{ textAlign: 'center' }}>
         <h1 className='underline text-3xl text-white'>Seleção de Heróis</h1>
