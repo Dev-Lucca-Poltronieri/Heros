@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 
-const heroControll = require('./controllers/heroControll');
-const userControll = require('./controllers/userControll');
+const heroControll = require('../controllers/heroControll');
+const userControll = require('../controllers/userControll');
 
 const app = express();
 app.use(cors());

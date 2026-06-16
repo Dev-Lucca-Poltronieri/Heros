@@ -28,6 +28,9 @@ exports.saveUser = async (req, res) => {
 
     const { email, password, name } = result.data;
 
+    // banco 
+    // chamar a fução do banco
+
 
     try {
         await db.query("INSERT INTO users (nome, email, senha) VALUES (?, ?, ?)", [ name, email, password,]) // trocar de acordo com o banco
