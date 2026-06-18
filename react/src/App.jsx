@@ -3,6 +3,7 @@ import Cadastro from './components/Cadastro';
 import Card from './components/Card';
 import Login from './components/Login';
 import axios from "axios";
+import icon from './assets/avatar/conf.png'
 /*import canhaoEVO from './assets/avatar/canhaoEVO.png';
 import espiritoGeloEVO from './assets/avatar/espiritoGeloEVO.png';
 import esqueletosEVO from './assets/avatar/esqueletosEVO.png';
@@ -23,9 +24,10 @@ import mongeCampeao from './assets/avatar/mongeCampeao.png';
 import principeCampeao from './assets/avatar/principeCampeao.avif';*/
 
 import { useEffect, useState } from 'react';
+import SideBar from './components/SideBar';
 
 function App() {
-
+  const [showSideBar, setShowSideBar] = useState(false)
   const [listaHerois, setListaHerois] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [firstComponent, setFirstComponent] = useState('login')
@@ -126,68 +128,92 @@ function App() {
     <>
 
 
-      <div className='pb-4 text-center grid backdrop-blur-md rounded-lg shadow-md'>
-        <h1 className=' text-3xl text-white'>Seleção de Heróis</h1>
-        <h1 className='text-2xl text-white'>Recrute Seu Time</h1>
-        <div className=' flex justify-center max-w gap-40'>
-          <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl'
-            onClick={() => {
-              setFiltro("todos");
-              setShowForm(false);
-            }}
-          >
-            Todos
-          </button>
 
-          <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl'
-            onClick={() => {
-              setFiltro("Heroi");
-              setShowForm(false);
-            }}
-          >
-            Heróis
-          </button>
 
-          <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl'
-            onClick={() => {
-              setFiltro("EVO");
-              setShowForm(false);
-            }}
-          >
-            Evoluções
-          </button>
 
-          <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl'
-            onClick={() => {
-              setFiltro("Campeão");
-              setShowForm(false);
-            }}
-          >
-            Campeões
-          </button>
-          <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl'
-            onClick={() => setShowForm(prev => !prev)}>Novo</button>
+
+      <div className="flex">
+        <div className="flex-1">
+
+          <div className='text-center grid'>
+
+            <div className='pb-4 pt-3 gap-2 grid text-center  backdrop-blur-md rounded-lg shadow-md max-w '>
+              <h1 className=' text-3xl text-white'>Seleção de Heróis</h1>
+              <h1 className='text-2xl text-white'>Recrute Seu Time</h1>
+              <div className='gap-40 flex justify-center align-center'>
+                <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl'
+                  onClick={() => {
+                    setFiltro("todos");
+                    setShowForm(false);
+                  }}
+                >
+                  Todos
+                </button>
+
+                <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl'
+                  onClick={() => {
+                    setFiltro("Heroi");
+                    setShowForm(false);
+                  }}
+                >
+                  Heróis
+                </button>
+
+                <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl'
+                  onClick={() => {
+                    setFiltro("EVO");
+                    setShowForm(false);
+                  }}
+                >
+                  Evoluções
+                </button>
+
+                <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl'
+                  onClick={() => {
+                    setFiltro("Campeão");
+                    setShowForm(false);
+                  }}
+                >
+                  Campeões
+                </button>
+                <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl'
+                  onClick={() => setShowForm(prev => !prev)}>Novo</button>
+              </div>
+
+
+
+            </div>
+
+            <div className='pt-3 pr-15 flex justify-end align-center'>
+              <button
+                onClick={() => setShowSideBar(!showSideBar)}>
+                <img src={icon} alt="SideBar" className='h-10 cursor-pointer' />
+              </button>
+            </div>
+
+
+
+
+
+            {!showForm && (
+              <div style={containerStyle}>
+                {heroisFiltrados.map((heroi) => (
+                  <Card
+                    key={heroi.id}
+                    heroi={heroi}
+                    excluirHeroi={excluirHeroi}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+          {showForm && <Formulario />}
 
         </div>
 
-
-
-        {!showForm && (
-          <div style={containerStyle}>
-            {heroisFiltrados.map((heroi) => (
-              <Card
-                key={heroi.id}
-                heroi={heroi}
-                excluirHeroi={excluirHeroi}
-              />
-            ))}
-          </div>
-        )}
+        {showSideBar && <SideBar />}
       </div>
-
-      {showForm && <Formulario />}
-
-
 
 
     </>
