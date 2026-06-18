@@ -125,12 +125,10 @@ function App() {
 
     <>
 
-      <div style={{ textAlign: 'center' }}>
-        <h1 className='underline text-3xl text-white'>Seleção de Heróis</h1>
-      </div>
 
-      <div style={{ textAlign: 'center', display: 'grid' }}>
-        <h1 className='underline text-2xl text-white'>Recrute Seu Time</h1>
+      <div className='pb-4 text-center grid backdrop-blur-md rounded-lg shadow-md'>
+        <h1 className=' text-3xl text-white'>Seleção de Heróis</h1>
+        <h1 className='text-2xl text-white'>Recrute Seu Time</h1>
         <div className=' flex justify-center max-w gap-40'>
           <button className='m-2.5 bg-cyan-600  text-white py-2 px-4 rounded w-50 font-[cinzel] font-bold text-xl'
             onClick={() => {
