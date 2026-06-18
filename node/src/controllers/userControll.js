@@ -1,5 +1,6 @@
 const db = require('../config/db');
 const { z } = require('zod');
+const {setUser, getUser} = require('../models/userModel');
 
 const userSchema = z.object({
     email: z.string()
@@ -26,22 +27,23 @@ exports.saveUser = async (req, res) => {
     }
 
 
-    const { email, password, name } = result.data;
-
-    // banco 
-    // chamar a fução do banco
-
+    const { name, email, password } = result.data;
 
     try {
-        await db.query("INSERT INTO users (nome, email, senha) VALUES (?, ?, ?)", [ name, email, password,]) // trocar de acordo com o banco
-        res.status(201).json({ message: ' You were registered ✅ ' })
+        await setUser(name, email, password);
 
+        return res.status(201).json({
+            message: ' You were registered ✅ '
+        })
     } catch (error) {
-        console.error(error)
+        console.error(error);
         return res.status(500).json({
             error: 'Server Error'
         })
     }
+
+
+   
 }
 
 
@@ -49,14 +51,12 @@ exports.validateUser = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        const [users] = await db.query(
-            'select * from users where email = ? and senha = ?', // trocar de acordo com o banco
-            [email, password]
-        )
+        
+        const users = await getUser(email, password);
 
         if (users.length === 0) {
             return res.status(401).json({
-                mensagem: 'Invalid Login'
+                mensagem: 'Invalid Login! ❌'
             })
         }
 

@@ -1,5 +1,6 @@
 const db = require('../config/db');
 const { z } = require('zod');
+const {setHero, deleteHero, updateHero} = require('../models/heroModel')
 
 const heroSchema = z.object({
     nome: z.string("The 'name' Needes to be a string"),
@@ -21,9 +22,9 @@ exports.heroRegister = async (req, res) => { // precisa inserir a fk do usuario 
     const {nome, classe, status, imagem, userId} = result.data;
 
 
-
     try {
-        await db.query("INSERT INTO heros (nome, classe, status, imagem, fk_usuarioId) VALUES (?, ?, ?, ?, ?)", [nome, classe, status, imagem, userId]) //verificar de acordo com o banco
+        await setHero(nome, classe , status, imagem, userId);
+
         res.status(201).json({message: '✅ Hero registered successfully'})
         
     } catch (error) {
@@ -40,10 +41,7 @@ exports.deleteHero = async (req, res) => {
     const { id } = req.params;
     try {
 
-        await db.query(
-            "UPDATE heros SET render = ? WHERE id = ?",
-            [false, id]
-        );
+        await deleteHero(id);
 
         res.status(200).json({
             message: 'Hero was Deleted'
@@ -66,7 +64,7 @@ exports.updateHero = async (req, res) => {
     const {status} = req.body;
 
     try {
-        await db.query("UPDATE heros SET status = (?) WHERE id = (?) ", [status, id])
+        await updateHero(id, status);
         res.status(201).json({message: '✅ Hero was updated'})
     } catch (error) {
         console.error(error)
