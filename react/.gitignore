@@ -10,12 +10,12 @@ lerna-debug.log*
 # Dependências
 node_modules/
 
+# Variáveis de ambiente
+.env
+
 # Build
 dist
 dist-ssr
-
-# Variáveis de ambiente
-node/.env
 
 # Arquivos locais
 *.local
