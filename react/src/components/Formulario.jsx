@@ -36,42 +36,44 @@ function Formulario() {
     const handlecadastro = async (e) => {
         e.preventDefault();
 
-        const result = schema.safeParse(formData);
-        if (!result.success) {
-            return setErros(result.error.format());
+      
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            setMensagem("User not logged in");
+            return;
         }
 
-
         try {
-            const userId = localStorage.getItem("userId");
-
-            const { data } = await axios.post(
-                "http://localhost:5000/register",
-                {
-                    nome,
-                    classe,
-                    status,
-                    userId
+            await axios.post("http://localhost:5000/register", {
+                nome,
+                classe,
+                status,
+                imagem
+  
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
                 }
-            );
+            
+            }
+        
+        );
 
-            setMensagem("Hero registered ✅"); // mensagem precisa vir do back - olhar no login/cadastro
+            setMensagem("Hero registered ✅");
 
         } catch (error) {
             setMensagem(
-                error.response?.data?.erro ||
-                "Erro ao conectar com o servidor!"
+                error.response?.data?.error ||
+                "Server Error"
             );
         }
     };
 
 
 
-    function handleChange(e) {
-        setFormData({
-            ...formData, [e.target.name]: e.target.value
-        })
-    }
+   
 
     /*function handleSubmit(e) {
         e.preventDefault();
@@ -114,7 +116,7 @@ function Formulario() {
 
                         onSubmit={handlecadastro}
                         style={formStyle}
-                        onChange={handleChange}
+                      
                     >
                         <h1 className=' font-bold flex w-full justify-center text-3xl py-5 text-red-900'>Novo Herói</h1>
                         <label className='flex w-full justify-center text-2xl mt-5 text-red-900'>Nome</label>

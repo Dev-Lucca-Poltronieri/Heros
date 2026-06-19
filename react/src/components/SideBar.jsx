@@ -1,6 +1,6 @@
 function SideBar() {
     return (
-        <aside className="  backdrop-blur-md rounded-lg shadow-md w-200 h-screen grid grid-rows-[auto_1fr_auto] p-4 ">
+      <aside className="backdrop-blur-md rounded-lg shadow-md w-full max-w-[200px] h-screen grid grid-rows-[auto_1fr_auto] p-4">
 
             <div>
                 <h2 className="text-white text-xl font-bold">

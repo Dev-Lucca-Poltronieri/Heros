@@ -3,7 +3,7 @@ const db = require('../config/db');
 
 
 async function setHero(nome, classe, status, imagem, userId){
-    const [result] =   await db.query("INSERT INTO heros (nome, classe, status, imagem, fk_usuarioId) VALUES (?, ?, ?, ?, ?)", [nome, classe, status, imagem, userId]) //verificar de acordo com o banco
+    const [result] =   await db.query("INSERT INTO heros (name, class, status, img, fk_userId) VALUES (?, ?, ?, ?, ?)", [nome, classe, status, imagem, userId]) //verificar de acordo com o banco
     return result;
 }
 

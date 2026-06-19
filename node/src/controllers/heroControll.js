@@ -1,16 +1,21 @@
 const db = require('../config/db');
 const { z } = require('zod');
-const {setHero, deleteHero, updateHero} = require('../models/heroModel')
+const { setHero, deleteHero, updateHero } = require('../models/heroModel')
 
 const heroSchema = z.object({
     nome: z.string("The 'name' Needes to be a string"),
     classe: z.string().min(3, "The 'class' Request min. 3  lyrics . Needs to be a string"),
     status: z.string("The 'status' Needes to be a string"),
     // imagem: z.string()
-    userId: z.coerce.number()
+    
 })
 
-exports.heroRegister = async (req, res) => { // precisa inserir a fk do usuario tambem - pegar do local storage
+exports.heroRegister = async (req, res) => {
+    console.log({
+  body: req.body,
+  user: req.user,
+  userId: req.user?.id
+});
     const result = heroSchema.safeParse(req.body);
 
     if (!result.success) {
@@ -19,23 +24,29 @@ exports.heroRegister = async (req, res) => { // precisa inserir a fk do usuario 
         });
     }
 
-    const {nome, classe, status, imagem, userId} = result.data;
+    const { nome, classe, status, imagem } = result.data;
 
+
+    const userId = req.user.id;
+  
 
     try {
-        await setHero(nome, classe , status, imagem, userId);
+        await setHero(nome, classe, status, imagem || null, userId);
 
-        res.status(201).json({message: '✅ Hero registered successfully'})
-        
+        return res.status(201).json({
+            message: "Hero registered successfully ✅"
+        });
+
     } catch (error) {
-        console.error(error)
-        return res.status(500).json({
-            error: 'Server Error'
-        })
-    }
-    
-}
+    console.log("🔥 ERRO COMPLETO:", error);
+    console.log("🔥 STACK:", error.stack);
 
+    return res.status(500).json({
+        error: error.message,
+        stack: error.stack
+    });
+}
+}
 exports.deleteHero = async (req, res) => {
 
     const { id } = req.params;
@@ -60,12 +71,12 @@ exports.deleteHero = async (req, res) => {
 }
 
 exports.updateHero = async (req, res) => {
-    const {id} = req.params;
-    const {status} = req.body;
+    const { id } = req.params;
+    const { status } = req.body;
 
     try {
         await updateHero(id, status);
-        res.status(201).json({message: '✅ Hero was updated'})
+        res.status(201).json({ message: '✅ Hero was updated' })
     } catch (error) {
         console.error(error)
         return res.status(500).error.json()
@@ -73,17 +84,17 @@ exports.updateHero = async (req, res) => {
 }
 
 exports.getHero = async (req, res) => {
-    const {userId} = req.params
+    const userId = req.user.id
     try {
-        const [rows] = await db.query("SELECT id, nome, classe, status FROM heros WHERE render = true and fk_usuarioId = ? ", [userId])
+        const [rows] = await db.query("SELECT id, name, class, status FROM heros WHERE render = true and fk_userId = ? ", [userId])
 
         return res.status(200).json(rows)
     } catch (error) {
-      return res.status(500).json({
-    error: 'Server error'
-});
-        
+        return res.status(500).json({
+            error: 'Server error'
+        });
+
     }
-    
+
 }
 

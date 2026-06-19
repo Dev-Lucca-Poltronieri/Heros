@@ -36,10 +36,16 @@ function App() {
 
   async function buscarHerois() {
     try {
-      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
+      console.log("userId:", userId);
 
       const { data } = await axios.get(
-        `http://localhost:5000/getHero/${userId}`
+        `http://localhost:5000/getHero`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
 
       return data;
@@ -51,18 +57,22 @@ function App() {
 
 
 
-  useEffect(() => {
-    const dadosFetch = async () => {
-      try {
-        const resultado = await buscarHerois();
-        setListaHerois(resultado);
-      } catch (error) {
-        console.error(error);
-      }
-    }
+useEffect(() => {
+  const dadosFetch = async () => {
+    const token = localStorage.getItem("token");
 
-    dadosFetch();
-  }, []);
+    if (!token) return;
+
+    try {
+      const resultado = await buscarHerois();
+      setListaHerois(resultado || []);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  dadosFetch();
+}, []);
 
 
 

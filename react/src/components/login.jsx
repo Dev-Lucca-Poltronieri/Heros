@@ -20,7 +20,7 @@ function Login({ setFirstComponent }) {
                 }
             );
             setErrors('')
-            localStorage.setItem("userId", data.userId);
+            localStorage.setItem("token", data.token);
             setFirstComponent("home");
 
 

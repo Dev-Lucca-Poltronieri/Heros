@@ -1,6 +1,7 @@
 const db = require('../config/db');
 const { z } = require('zod');
-const {setUser, getUser} = require('../models/userModel');
+const { setUser, getUser } = require('../models/userModel');
+const jwt = require('jsonwebtoken');
 
 const userSchema = z.object({
     email: z.string()
@@ -43,7 +44,7 @@ exports.saveUser = async (req, res) => {
     }
 
 
-   
+
 }
 
 
@@ -51,18 +52,25 @@ exports.validateUser = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        
-        const users = await getUser(email, password);
 
-        if (users.length === 0) {
-            return res.status(401).json({
-                mensagem: 'Invalid Login! ❌'
-            })
+        const user = await getUser(email, password);
+        if (!user) {
+            return res.status(400).json({ error: "User not found" });
         }
+
+        const token = jwt.sign(
+            {id: user.id},
+            process.env.JWT_SECRET,
+            {expiresIn: '1d'}
+        )
 
 
         return res.status(200).json({
-            userId: users[0].id
+           token,
+           user: {
+            id: user.id,
+            email: user.email
+           }
         });
     } catch (error) {
         console.error(error);
