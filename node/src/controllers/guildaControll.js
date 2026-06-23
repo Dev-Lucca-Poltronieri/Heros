@@ -1,6 +1,6 @@
 const db = require('../config/db');
 const { z } = require('zod');
-const {getGuildaDataBase, myGuildaDataBase} = require('../models/guildaModel')
+const {getGuildaDataBase, myGuildaDataBase, newGuilda} = require('../models/guildaModel')
 
 
 
@@ -25,6 +25,19 @@ exports.myGuilda = async (req, res) => {
 
     } catch (error) {
         console.error("Couldn't find any Guilda", error);
+        return res.status(500).json({ error: "Seerver Error" });
+    }
+}
+
+exports.createGuilda = async (req, res) => {
+    const {name, description, tipo } = req.body;
+    const userId = req.user.id;
+    try {
+        const guildas = await newGuilda(name, description, userId,  tipo,); 
+        return res.status(201).json(guildas);
+
+    } catch (error) {
+        console.error("Couldn't create Guilda", error);
         return res.status(500).json({ error: "Seerver Error" });
     }
 }

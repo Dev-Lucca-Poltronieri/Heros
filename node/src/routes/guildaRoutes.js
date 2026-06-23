@@ -7,6 +7,7 @@ const authMiddleWare = require('../middleWares/authMiddleWare')
 
 router.get('/getGuilda', guildaControll.getGuilda)
 router.get('/myGuilda', authMiddleWare, guildaControll.myGuilda )
+router.post('/createGuilda', authMiddleWare, guildaControll.createGuilda)
 
 
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+
 function CardGuilda({ filtro, setFiltro }) {
     const [guildas, setGuildas] = useState([]);
     const [expandedGuilda, setExpandedGuilda] = useState(null);
@@ -9,6 +10,7 @@ function CardGuilda({ filtro, setFiltro }) {
     const [nomeGuilda, setNomeGuilda] = useState("");
     const [descricaoGuilda, setDescricaoGuilda] = useState("");
     const [mensagem, setMensagem] = useState("");
+
 
     async function buscarGuildas() {
         try {
@@ -113,6 +115,14 @@ function CardGuilda({ filtro, setFiltro }) {
         );
     }
 
+   
+    function corTipo(tipo) {
+        if (tipo === 'Heroi') return 'text-yellow-500 font-bold';
+        if (tipo === 'EVO') return 'text-purple-700 font-bold';
+        if (tipo === 'Campeao') return 'text-green-800 font-bold';
+        return 'text-gray-700';
+    }
+
     return (
         <>
             <div className="h-full px-5 grid gap-5">
@@ -128,7 +138,13 @@ function CardGuilda({ filtro, setFiltro }) {
                         className="w-[75%] flex items-center justify-end h-35 rounded-xl bg-gray-400/60 shadow-2xl px-5 py-4"
                     >
                         <div className="grid w-full">
-                            <p className="font-bold text-xl">{guilda.name}</p>
+                            <div className="flex w-full align-center items-center gap-1 ">
+                                <p className="font-bold text-xl">{guilda.name} </p>
+                                -
+                                <p className={`font-bold text-xl ${corTipo(guilda.tipo)}`}>{guilda.tipo}</p>
+                            </div>
+
+
                             <p>{guilda.description}</p>
                         </div>
                         <div className="flex items-center justify-center h-full">
@@ -153,6 +169,7 @@ function CardGuilda({ filtro, setFiltro }) {
                         onClick={(e) => e.stopPropagation()}
                     >
                         <p className="font-bold text-2xl text-center">{expandedGuilda.name}</p>
+                        <p className={`font-bold text-2xl text-center ${corTipo(expandedGuilda.tipo)}`}>{expandedGuilda.tipo}</p>
                         <div className="h-[80%] w-full">
                             <p className="text-center">{expandedGuilda.description}</p>
                         </div>
