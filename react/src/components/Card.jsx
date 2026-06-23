@@ -6,10 +6,12 @@ import defaultImage from "../assets/avatar/defaultImage.png"
 
 function Card({ heroi, excluirHeroi }) {
 
+    
+
     const [isSelected, setIsSelected] = useState(false);
 
     const mensagem = () => {
-        alert(`${heroi.nome} selecionado com sucesso`)
+        alert(`${heroi.name} selecionado com sucesso`)
     }
 
     const excluir = () => {
@@ -20,32 +22,7 @@ function Card({ heroi, excluirHeroi }) {
     const [nivel, setNivel] = useState(0);
 
 
-    /* const cardStyle = {
-         border: '1px solid #ddd',
-         borderRadius: '12px',
-         padding: '16px',
-         margin: '10px',
-         boxShadow: '0 4px 8px rgba(0, 0, 0.1)',
-         textAlign: 'center',
-         width: '200px',
-         display: 'grid'
-     };*/
-
-    /*function destacar() {
-        return {
-            border: '2px solid blue',
-            borderRadius: '12px',
-            padding: '16px',
-            margin: '10px',
-            boxShadow: '0 4px 8px rgba(0, 0, 0.1)',
-            textAlign: 'center',
-            width: '200px',
-            display: 'grid'
-        }
-    }*/
-
-
-    // let cor = "border-green-300";
+   
 
     if (xp === 110) {
         setXp(0);
@@ -62,11 +39,11 @@ function Card({ heroi, excluirHeroi }) {
 
 
     function corBorda() {
-        if (isSelected == true && heroi.classe == 'EVO') {
+        if (isSelected == true && heroi.class == 'EVO') {
             return 'border-2 border-purple-600 drop-shadow-[0_0_15px_#9333ea] transition-all duration-300'
-        } else if (isSelected == true && heroi.classe == 'Heroi') {
+        } else if (isSelected == true && heroi.class == 'Heroi') {
             return 'border-2 border-amber-400 drop-shadow-[0_0_15px_#f59e0b] transition-all duration-300'
-        } else if (isSelected == true && heroi.classe == 'Campeão') {
+        } else if (isSelected == true && heroi.class == 'Campeão') {
             return 'border-2 border-green-500  drop-shadow-[0_0_15px_#22c55e] transition-all duration-300'
         } else {
             return 'border-2 border-gray-200 shadow-sm transition-all duration-300'
@@ -77,11 +54,11 @@ function Card({ heroi, excluirHeroi }) {
 
 
     function corClasse() {
-        if (heroi.classe == 'EVO') {
+        if (heroi.class == 'EVO') {
             return "text-purple-400 drop-shadow-[0_0_15px_#9333ea]"
-        } else if (heroi.classe == 'Heroi') {
+        } else if (heroi.class == 'Heroi') {
             return "text-amber-500 drop-shadow-[0_0_15px_#f59e0b]"
-        } else if (heroi.classe == 'Campeão') {
+        } else if (heroi.class == 'Campeão') {
             return "text-green-500  drop-shadow-[0_0_15px_#22c55e]"
         } else {
             return "";
@@ -89,11 +66,11 @@ function Card({ heroi, excluirHeroi }) {
     }
 
     function corBarra() {
-        if (heroi.classe == 'EVO') {
+        if (heroi.class == 'EVO') {
             return " bg-purple-600 drop-shadow-[0_0_5px_#9333ea]"
-        } else if (heroi.classe == 'Heroi') {
+        } else if (heroi.class == 'Heroi') {
             return "bg-amber-400  drop-shadow-[0_0_5px_#f59e0b]"
-        } else if (heroi.classe == 'Campeão') {
+        } else if (heroi.class == 'Campeão') {
             return "bg-green-500  drop-shadow-[0_0_5px_#22c55e]"
         } else {
             return "";
@@ -101,11 +78,11 @@ function Card({ heroi, excluirHeroi }) {
     }
 
     function corBotao() {
-        if (heroi.classe == 'EVO') {
+        if (heroi.class == 'EVO') {
             return " bg-purple-600"
-        } else if (heroi.classe == 'Heroi') {
+        } else if (heroi.class == 'Heroi') {
             return "bg-amber-400"
-        } else if (heroi.classe == 'Campeão') {
+        } else if (heroi.class == 'Campeão') {
             return "bg-green-500"
         } else {
             return "";
@@ -113,11 +90,11 @@ function Card({ heroi, excluirHeroi }) {
     }
 
     function corFundoCard() {
-        if (heroi.classe == 'EVO') {
+        if (heroi.class == 'EVO') {
             return " bg-blue-900"
-        } else if (heroi.classe == 'Heroi') {
+        } else if (heroi.class == 'Heroi') {
             return "bg-amber-900"
-        } else if (heroi.classe == 'Campeão') {
+        } else if (heroi.class == 'Campeão') {
             return "bg-green-900"
         } else {
             return "";
@@ -125,11 +102,11 @@ function Card({ heroi, excluirHeroi }) {
     }
 
     function corNomePersonagem() {
-        if (heroi.classe == 'EVO') {
+        if (heroi.class == 'EVO') {
             return " text-purple-200 text-xl"
-        } else if (heroi.classe == 'Heroi') {
+        } else if (heroi.class == 'Heroi') {
             return "text-amber-300 text-xl"
-        } else if (heroi.classe == 'Campeão') {
+        } else if (heroi.class == 'Campeão') {
             return "text-green-300 text-xl"
         } else {
             return "";
@@ -149,15 +126,15 @@ function Card({ heroi, excluirHeroi }) {
                 onClick={() => setIsSelected(!isSelected)}
                 className={` ${corFundoCard()} border-4  rounded-xl p-4 m-2.5 shadow-md text-center w-70 h-165 ${corBorda()}`}>
 
-                <h2 className={` font-[cinzel] text-2xl  font-semibold ${corClasse()}`}>{heroi.classe}</h2>
+                <h2 className={` font-[cinzel] text-2xl  font-semibold ${corClasse()}`}>{heroi.class}</h2>
                 <StatusBadge tipo={heroi.status} />
 
                 <div className="text-white font-[orbitron]">Nivel: {nivel}</div>
                 <img
-                    src={heroi.imagem ? `/avatar/${heroi.imagem}` : defaultImage}
+                    src={heroi.imagem ? `/avatar/${heroi.img}` : defaultImage}
                     alt={imageNotFound}
                 />
-                <p className={`${corNomePersonagem()} font-3xl font-[bangers]`}>{heroi.nome}</p>
+                <p className={`${corNomePersonagem()} font-3xl font-[bangers]`}>{heroi.name}</p>
 
 
                 <button className={`m-2.5 ${corBotao()}  text-white py-2 px-4 rounded`} onClick={mensagem}>Recrutar!</button>

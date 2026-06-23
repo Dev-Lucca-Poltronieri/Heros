@@ -11,42 +11,29 @@ const heroSchema = z.object({
 })
 
 exports.heroRegister = async (req, res) => {
-    console.log({
-  body: req.body,
-  user: req.user,
-  userId: req.user?.id
-});
+ 
     const result = heroSchema.safeParse(req.body);
 
     if (!result.success) {
-        return res.status(400).json({
-            error: result.error.format()
-        });
+        return res.status(400).json({ error: result.error.format() });
     }
 
-    const { nome, classe, status, imagem } = result.data;
-
-
+    const { nome, classe, status } = result.data;
     const userId = req.user.id;
-  
+
+    // ✅ se enviou imagem, pega o caminho; senão, null
+    const imagem = req.file ? req.file.filename : null;
 
     try {
-        await setHero(nome, classe, status, imagem || null, userId);
-
-        return res.status(201).json({
-            message: "Hero registered successfully ✅"
-        });
+        await setHero(nome, classe, status, imagem, userId);
+        return res.status(201).json({ message: "Hero registered successfully ✅" });
 
     } catch (error) {
-    console.log("🔥 ERRO COMPLETO:", error);
-    console.log("🔥 STACK:", error.stack);
+        console.error("Erro ao registrar herói:", error);
+        return res.status(500).json({ error: "Erro interno no servidor" });
+    }
+};
 
-    return res.status(500).json({
-        error: error.message,
-        stack: error.stack
-    });
-}
-}
 exports.deleteHero = async (req, res) => {
 
     const { id } = req.params;

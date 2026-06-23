@@ -14,7 +14,7 @@ async function getUser(email, password){
             [email, password]
         )
 
-        return users
+        return users[0]
 }
 
 module.exports = {setUser, getUser}

@@ -2,6 +2,7 @@ import Formulario from './components/Formulario';
 import Cadastro from './components/Cadastro';
 import Card from './components/Card';
 import Login from './components/Login';
+
 import axios from "axios";
 import icon from './assets/avatar/conf.png'
 /*import canhaoEVO from './assets/avatar/canhaoEVO.png';
@@ -25,19 +26,22 @@ import principeCampeao from './assets/avatar/principeCampeao.avif';*/
 
 import { useEffect, useState } from 'react';
 import SideBar from './components/SideBar';
+import Guilda from './components/Guilda';
 
 function App() {
   const [showSideBar, setShowSideBar] = useState(false)
   const [listaHerois, setListaHerois] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [firstComponent, setFirstComponent] = useState('login')
+  const [firstComponent, setFirstComponent] = useState(() => {
+    return localStorage.getItem("token") ? "home" : "login";
+  });
 
 
 
   async function buscarHerois() {
     try {
       const token = localStorage.getItem("token");
-      console.log("userId:", userId);
+
 
       const { data } = await axios.get(
         `http://localhost:5000/getHero`,
@@ -57,22 +61,22 @@ function App() {
 
 
 
-useEffect(() => {
-  const dadosFetch = async () => {
-    const token = localStorage.getItem("token");
+  useEffect(() => {
+    const dadosFetch = async () => {
+      const token = localStorage.getItem("token");
 
-    if (!token) return;
+      if (!token) return;
 
-    try {
-      const resultado = await buscarHerois();
-      setListaHerois(resultado || []);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+      try {
+        const resultado = await buscarHerois();
+        setListaHerois(resultado || []);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  dadosFetch();
-}, []);
+    dadosFetch();
+  }, []);
 
 
 
@@ -120,7 +124,7 @@ useEffect(() => {
 
   const heroisFiltrados = listaHerois.filter((heroi) => {
     if (filtro === "todos") return true;
-    return heroi.classe === filtro;
+    return heroi.class === filtro;
   });
 
 
@@ -142,7 +146,7 @@ useEffect(() => {
 
 
 
-      <div className="flex">
+      {/*<div className="flex">
         <div className="flex-1">
 
           <div className='text-center grid'>
@@ -218,14 +222,14 @@ useEffect(() => {
             )}
           </div>
 
-          {showForm && <Formulario />}
+          {showForm && <Formulario onHeroSaved={buscarHerois} setListaHerois={setListaHerois} />}
 
         </div>
 
         {showSideBar && <SideBar />}
-      </div>
+      </div>*/}
 
-
+      <Guilda />
     </>
   );
 

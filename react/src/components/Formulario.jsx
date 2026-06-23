@@ -14,13 +14,13 @@ const schema = z.object({
     userId: z.coerce.number()
 })
 
-function Formulario() {
+function Formulario({onHeroSaved, setListaHerois}) {
 
     const [mensagem, setMensagem] = useState("");
     const [nome, setNome] = useState("");
     const [classe, setClasse] = useState("");
     const [status, setStatus] = useState("");
-    // const [imagem, setImagem] = useState("");
+    const [imagem, setImagem] = useState("");
 
     const [formData, setFormData] = useState({
         nome: '',
@@ -33,59 +33,43 @@ function Formulario() {
 
 
 
-    const handlecadastro = async (e) => {
+      const handlecadastro = async (e) => {
         e.preventDefault();
 
-      
         const token = localStorage.getItem("token");
-
         if (!token) {
             setMensagem("User not logged in");
             return;
         }
 
+        const data = new FormData();
+        data.append("nome", nome);
+        data.append("classe", classe);
+        data.append("status", status);
+        if (imagem) data.append("imagem", imagem);
+
         try {
-            await axios.post("http://localhost:5000/register", {
-                nome,
-                classe,
-                status,
-                imagem
-  
-            },
-            {
+            await axios.post("http://localhost:5000/register", data, {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data"
                 }
-            
-            }
-        
-        );
+            });
 
             setMensagem("Hero registered ✅");
 
-        } catch (error) {
-            setMensagem(
-                error.response?.data?.error ||
-                "Server Error"
-            );
-        }
-    };
+            // ✅ atualiza a lista após cadastrar
+            const heroisAtualizados = await onHeroSaved();
+            setListaHerois(heroisAtualizados || []);
 
+        } catch (error) {
+            setMensagem(error.response?.data?.error || "Server error");
+        }
+    }
 
 
    
 
-    /*function handleSubmit(e) {
-        e.preventDefault();
-
-        const result = schema.safeParse(formData);
-        if (!result.success) {
-            setErros(result.error.format());
-        } else {
-            setErros({})
-            alert("Formulário enviado com sucesso!")
-        }
-    }*/
 
 
     const formStyle = {
@@ -162,6 +146,7 @@ function Formulario() {
                             placeholder='Selecione sua Imagem'
                             // onChange={setImagem}
                             className=' border-2 p-2 rounded w-full mb-2 h-12 bg-white border-red-900'
+                            onChange={(e) => setImagem(e.target.files[0])}
                         />
                         {erros.img && (
                             <p className='text-red-500'>{erros.senha._errors}</p>
