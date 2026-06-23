@@ -8,6 +8,12 @@ async function getGuildaDataBase(){
     return rows;
 }
 
+async function myGuildaDataBase(userId){
+    const [rows] =   await db.query("SELECT * FROM guilda WHERE fk_userId = ?", [userId]); 
+    console.log("resultado:", rows); 
+    return rows;
+}
 
 
-module.exports = {getGuildaDataBase}
+
+module.exports = {getGuildaDataBase, myGuildaDataBase}

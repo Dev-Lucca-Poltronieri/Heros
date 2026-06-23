@@ -21,7 +21,7 @@ exports.heroRegister = async (req, res) => {
     const { nome, classe, status } = result.data;
     const userId = req.user.id;
 
-    // ✅ se enviou imagem, pega o caminho; senão, null
+  
     const imagem = req.file ? req.file.filename : null;
 
     try {

@@ -6,6 +6,7 @@ const guildaControll = require("../controllers/guildaControll");
 const authMiddleWare = require('../middleWares/authMiddleWare')
 
 router.get('/getGuilda', guildaControll.getGuilda)
+router.get('/myGuilda', authMiddleWare, guildaControll.myGuilda )
 
 
 

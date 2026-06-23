@@ -29,6 +29,7 @@ import SideBar from './components/SideBar';
 import Guilda from './components/Guilda';
 
 function App() {
+
   const [showSideBar, setShowSideBar] = useState(false)
   const [listaHerois, setListaHerois] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -136,6 +137,20 @@ function App() {
     return <Cadastro setFirstComponent={setFirstComponent} />;
   }
 
+  if (firstComponent === 'guilda') {
+    return <Guilda setFirstComponent={setFirstComponent} />;
+  }
+
+  if (firstComponent === 'missoes') {
+    return <div>Missões em breve...</div>;
+  }
+
+  if (firstComponent === 'profile') {
+    return <div>Profile em breve...</div>;
+  }
+
+
+
 
   return (
 
@@ -146,7 +161,7 @@ function App() {
 
 
 
-      {/*<div className="flex">
+      {<div className="flex">
         <div className="flex-1">
 
           <div className='text-center grid'>
@@ -208,7 +223,6 @@ function App() {
 
 
 
-
             {!showForm && (
               <div style={containerStyle}>
                 {heroisFiltrados.map((heroi) => (
@@ -226,10 +240,10 @@ function App() {
 
         </div>
 
-        {showSideBar && <SideBar />}
-      </div>*/}
+        {showSideBar && <SideBar setFirstComponent={setFirstComponent} />}
+      </div>}
 
-      <Guilda />
+      {/*<Guilda />*/}
     </>
   );
 
