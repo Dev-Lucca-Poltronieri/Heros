@@ -1,6 +1,5 @@
 const db = require('../config/db');
-const { z } = require('zod');
-const {getGuildaDataBase, myGuildaDataBase, newGuilda} = require('../models/guildaModel')
+const {getGuildaDataBase, myGuildaDataBase, newGuilda, getGuildaTipo, insertHeroIntoGuilda, getMyHeroes, heroJaEmGuilda} = require('../models/guildaModel')
 
 
 
@@ -42,3 +41,36 @@ exports.createGuilda = async (req, res) => {
     }
 }
 
+exports.insertIntoGuilda = async (req, res) => {
+    const { guildaId, heroIds } = req.body;
+
+    try {
+        const guilda = await getGuildaTipo(guildaId);
+
+        for (const heroId of heroIds) {
+            const jaEstaNaGuilda = await heroJaEmGuilda(heroId);
+            if (jaEstaNaGuilda) {
+                return res.status(400).json({ error: `Herói ${heroId} já está em uma guilda!` });
+            }
+            await insertHeroIntoGuilda(guildaId, heroId);
+        }
+
+        return res.status(201).json({ message: "Heróis inseridos com sucesso" });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Server Error" });
+    }
+}
+
+exports.myHeroes = async (req, res) => {
+    const userId = req.user.id;
+     console.log("userId recebido:", userId);
+    try {
+        const herois = await getMyHeroes(userId);
+             console.log("herois encontrados:", herois)
+        return res.status(200).json(herois);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Server Error" });
+    }
+}

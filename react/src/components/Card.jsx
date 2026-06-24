@@ -41,7 +41,7 @@ function Card({ heroi, excluirHeroi }) {
     function corBorda() {
         if (isSelected == true && heroi.class == 'EVO') {
             return 'border-2 border-purple-600 drop-shadow-[0_0_15px_#9333ea] transition-all duration-300'
-        } else if (isSelected == true && heroi.class == 'Heroi') {
+        } else if (isSelected == true && heroi.class == 'Herói') {
             return 'border-2 border-amber-400 drop-shadow-[0_0_15px_#f59e0b] transition-all duration-300'
         } else if (isSelected == true && heroi.class == 'Campeão') {
             return 'border-2 border-green-500  drop-shadow-[0_0_15px_#22c55e] transition-all duration-300'
@@ -56,7 +56,7 @@ function Card({ heroi, excluirHeroi }) {
     function corClasse() {
         if (heroi.class == 'EVO') {
             return "text-purple-400 drop-shadow-[0_0_15px_#9333ea]"
-        } else if (heroi.class == 'Heroi') {
+        } else if (heroi.class == 'Herói') {
             return "text-amber-500 drop-shadow-[0_0_15px_#f59e0b]"
         } else if (heroi.class == 'Campeão') {
             return "text-green-500  drop-shadow-[0_0_15px_#22c55e]"
@@ -68,7 +68,7 @@ function Card({ heroi, excluirHeroi }) {
     function corBarra() {
         if (heroi.class == 'EVO') {
             return " bg-purple-600 drop-shadow-[0_0_5px_#9333ea]"
-        } else if (heroi.class == 'Heroi') {
+        } else if (heroi.class == 'Herói') {
             return "bg-amber-400  drop-shadow-[0_0_5px_#f59e0b]"
         } else if (heroi.class == 'Campeão') {
             return "bg-green-500  drop-shadow-[0_0_5px_#22c55e]"
@@ -80,7 +80,7 @@ function Card({ heroi, excluirHeroi }) {
     function corBotao() {
         if (heroi.class == 'EVO') {
             return " bg-purple-600"
-        } else if (heroi.class == 'Heroi') {
+        } else if (heroi.class == 'Herói') {
             return "bg-amber-400"
         } else if (heroi.class == 'Campeão') {
             return "bg-green-500"
@@ -92,7 +92,7 @@ function Card({ heroi, excluirHeroi }) {
     function corFundoCard() {
         if (heroi.class == 'EVO') {
             return " bg-blue-900"
-        } else if (heroi.class == 'Heroi') {
+        } else if (heroi.class == 'Herói') {
             return "bg-amber-900"
         } else if (heroi.class == 'Campeão') {
             return "bg-green-900"
@@ -104,7 +104,7 @@ function Card({ heroi, excluirHeroi }) {
     function corNomePersonagem() {
         if (heroi.class == 'EVO') {
             return " text-purple-200 text-xl"
-        } else if (heroi.class == 'Heroi') {
+        } else if (heroi.class == 'Herói') {
             return "text-amber-300 text-xl"
         } else if (heroi.class == 'Campeão') {
             return "text-green-300 text-xl"
@@ -131,8 +131,7 @@ function Card({ heroi, excluirHeroi }) {
 
                 <div className="text-white font-[orbitron]">Nivel: {nivel}</div>
                 <img
-                    src={heroi.imagem ? `/avatar/${heroi.img}` : defaultImage}
-                    alt={imageNotFound}
+                   src={heroi.img ? `http://localhost:5000/uploads/${heroi.img}` : defaultImage}
                 />
                 <p className={`${corNomePersonagem()} font-3xl font-[bangers]`}>{heroi.name}</p>
 

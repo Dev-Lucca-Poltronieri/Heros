@@ -15,7 +15,7 @@ function FormGuilda({ setFiltro }) {
                 { name: nomeGuilda, description: descricaoGuilda, tipo: tipoGuilda },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-            setMensagem("Guilda criada com sucesso ✅");
+            setMensagem("Guilda registered ✅");
             setNomeGuilda("");
             setDescricaoGuilda("");
             setTimeout(() => {
@@ -39,16 +39,18 @@ function FormGuilda({ setFiltro }) {
                     onChange={(e) => setNomeGuilda(e.target.value)}
                     placeholder="Nome da guilda"
                     className="border-2 border-gray-700 bg-white p-2 rounded h-10"
+                    required
                 />
 
                 <label className="font-bold text-gray-700">Tipo</label>
                 <select
                     className="border-2 border-gray-700 bg-white p-2 rounded h-10"
                     value={tipoGuilda}
-                    onChange={(e) => setTipoGuilda(e.target.value)}>
-                    <option value="Heroi">Herói</option>
+                    onChange={(e) => setTipoGuilda(e.target.value)}
+                    required>
+                    <option value="Herói">Herói</option>
                     <option value="EVO">EVO</option>
-                    <option value="Campeao">Campeão</option>
+                    <option value="Campeão">Campeão</option>
                 </select>
 
                 <label className="font-bold text-gray-700">Descrição</label>
@@ -57,10 +59,11 @@ function FormGuilda({ setFiltro }) {
                     onChange={(e) => setDescricaoGuilda(e.target.value)}
                     placeholder="Descrição da guilda"
                     className="border-2 border-gray-700 bg-white p-2 rounded h-24 resize-none"
+                    required
                 />
 
                 {mensagem && (
-                    <p className={`text-center font-bold ${mensagem.includes("✅") ? "text-green-700" : "text-red-700"}`}>
+                    <p className={`text-center font-bold ${mensagem.includes("✅") ? "text-green-500" : "text-red-600"}`}>
                         {mensagem}
                     </p>
                 )}

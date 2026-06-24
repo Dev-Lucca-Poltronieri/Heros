@@ -7,6 +7,8 @@ const authMiddleWare = require('../middleWares/authMiddleWare')
 
 router.post('/saveUser', userControll.saveUser)
 router.post('/validateUser', userControll.validateUser)
+router.get('/getProfile', authMiddleWare, userControll.getProfile)
+router.patch('/updateProfile', authMiddleWare, userControll.updateProfile)
 
 
 

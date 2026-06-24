@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import HeroSelector from "./HeroSelector";
 
 
 function CardGuilda({ filtro, setFiltro }) {
+    const [showHeroSelector, setShowHeroSelector] = useState(false);
+
     const [guildas, setGuildas] = useState([]);
     const [expandedGuilda, setExpandedGuilda] = useState(null);
 
-    // Form nova guilda
+
     const [nomeGuilda, setNomeGuilda] = useState("");
     const [descricaoGuilda, setDescricaoGuilda] = useState("");
     const [mensagem, setMensagem] = useState("");
@@ -57,10 +60,10 @@ function CardGuilda({ filtro, setFiltro }) {
         const fetchData = async () => {
             if (filtro === "todos") {
                 const data = await buscarGuildas();
-                setGuildas(data || []); // ← estava faltando
+                setGuildas(data || []);
             } else if (filtro === "minha") {
                 const data = await buscarMinhaGuilda();
-                setGuildas(data || []); // ← array direto, não [data]
+                setGuildas(data || []);
             }
         };
         fetchData();
@@ -115,11 +118,11 @@ function CardGuilda({ filtro, setFiltro }) {
         );
     }
 
-   
+
     function corTipo(tipo) {
-        if (tipo === 'Heroi') return 'text-yellow-500 font-bold';
+        if (tipo === 'Herói') return 'text-yellow-500 font-bold';
         if (tipo === 'EVO') return 'text-purple-700 font-bold';
-        if (tipo === 'Campeao') return 'text-green-800 font-bold';
+        if (tipo === 'Campeão') return 'text-green-800 font-bold';
         return 'text-gray-700';
     }
 
@@ -128,7 +131,7 @@ function CardGuilda({ filtro, setFiltro }) {
             <div className="h-full px-5 grid gap-5">
                 {guildas.length === 0 && (
                     <p className="text-center text-gray-300 text-xl pt-10">
-                        {filtro === "minha" ? "Você ainda não tem uma guilda." : "Nenhuma guilda encontrada."}
+                        {filtro === "minha" ? "You don't have any Guilda." : "No Guilda founded."}
                     </p>
                 )}
 
@@ -171,8 +174,14 @@ function CardGuilda({ filtro, setFiltro }) {
                         <p className="font-bold text-2xl text-center">{expandedGuilda.name}</p>
                         <p className={`font-bold text-2xl text-center ${corTipo(expandedGuilda.tipo)}`}>{expandedGuilda.tipo}</p>
                         <div className="h-[80%] w-full">
-                            <p className="text-center">{expandedGuilda.description}</p>
+                            <p>{expandedGuilda.description}</p>
                         </div>
+                        {showHeroSelector && (
+                                <HeroSelector
+                                    guilda={expandedGuilda}
+                                    onFechar={() => setShowHeroSelector(false)}
+                                />
+                            )}
                         <div className="flex gap-50 mt-4 w-full">
                             <div className="flex w-full justify-center items-center">
                                 <button
@@ -182,8 +191,12 @@ function CardGuilda({ filtro, setFiltro }) {
                                     Fechar
                                 </button>
                             </div>
+                            
+
                             <div className="flex w-full justify-center items-center">
-                                <button className="cursor-pointer rounded-xl bg-cyan-600 text-white px-4 h-10 font-bold">
+                                <button 
+                                className="cursor-pointer rounded-xl bg-cyan-600 text-white px-4 h-10 font-bold"
+                                onClick={() => setShowHeroSelector(true)}>
                                     Adicionar Heróis
                                 </button>
                             </div>

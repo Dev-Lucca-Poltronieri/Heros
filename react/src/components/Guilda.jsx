@@ -51,8 +51,8 @@ function Guilda({ setFirstComponent }) {
                 </div>
             </div>
 
-            {/* Conteúdo com padding para não ficar atrás do header */}
-            <div className="mt-[300px] overflow-y-auto">
+            
+            <div className="mt-75 overflow-y-auto">
                 {filtro === "nova"
                     ? <FormGuilda setFiltro={setFiltro} />
                     : <CardGuilda filtro={filtro} setFiltro={setFiltro} />

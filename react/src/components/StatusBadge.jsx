@@ -7,23 +7,23 @@ function StatusBadge({ tipo }) {
 
 
     const estilos = {
-        online: "bg-green-500 shadow-green-700",
-        offline: "bg-red-500 shadow-gray-200 ",
-        ausente: "bg-amber-400 shadow-amber-200",
+        Online: "bg-green-500 shadow-green-700",
+        Offline: "bg-red-500 shadow-gray-200 ",
+        Ausente: "bg-amber-400 shadow-amber-200",
     };
 
 
     function mudarCor() {
 
-        if (tipo == "online") {
+        if (tipo == "Online") {
 
             return "text-green-500";
 
-        } else if (tipo == 'ausente') {
+        } else if (tipo == 'Ausente') {
 
             return "text-amber-500";
 
-        } else if (tipo == 'offline') {
+        } else if (tipo == 'Offline') {
 
             return "text-red-500";
 
@@ -34,15 +34,15 @@ function StatusBadge({ tipo }) {
 
     function mudarSombra() {
 
-        if (tipo == "online") {
+        if (tipo == "Online") {
 
             return "shadow-md shadow-green-500/50 bg-green-500 rounded-full w-3 h-3";
 
-        } else if (tipo == 'ausente') {
+        } else if (tipo == 'Ausente') {
 
             return "shadow-md shadow-amber-500/50 bg-amber-500 rounded-full w-3 h-3";
 
-        } else if (tipo == 'offline') {
+        } else if (tipo == 'Offline') {
 
             return "shadow-md shadow-red-500/50 bg-red-500 rounded-full w-3 h-3";
 

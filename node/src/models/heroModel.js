@@ -21,4 +21,6 @@ async function updateHero(id, status){
     return result;
 }
 
+
+
 module.exports = {setHero, deleteHero, updateHero}

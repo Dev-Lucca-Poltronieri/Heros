@@ -1,6 +1,6 @@
 const db = require('../config/db');
 const { z } = require('zod');
-const { setHero, deleteHero, updateHero } = require('../models/heroModel')
+const { setHero, deleteHero, updateHero, } = require('../models/heroModel')
 
 const heroSchema = z.object({
     nome: z.string("The 'name' Needes to be a string"),
@@ -73,7 +73,7 @@ exports.updateHero = async (req, res) => {
 exports.getHero = async (req, res) => {
     const userId = req.user.id
     try {
-        const [rows] = await db.query("SELECT id, name, class, status FROM heros WHERE render = true and fk_userId = ? ", [userId])
+        const [rows] = await db.query("SELECT id, name, class, status, img FROM heros WHERE render = true and fk_userId = ? ", [userId])
 
         return res.status(200).json(rows)
     } catch (error) {

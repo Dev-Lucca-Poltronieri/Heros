@@ -14,26 +14,23 @@ const schema = z.object({
     userId: z.coerce.number()
 })
 
-function Formulario({onHeroSaved, setListaHerois}) {
+function Formulario({ onHeroSaved, setListaHerois }) {
+
+   
 
     const [mensagem, setMensagem] = useState("");
     const [nome, setNome] = useState("");
-    const [classe, setClasse] = useState("");
-    const [status, setStatus] = useState("");
+    const [classe, setClasse] = useState("Herói");
+    const [status, setStatus] = useState("Online");
     const [imagem, setImagem] = useState("");
 
-    const [formData, setFormData] = useState({
-        nome: '',
-        classe: '',
-        imagem: '',
-        status: '',
-    })
+ 
 
     const [erros, setErros] = useState({});
 
 
 
-      const handlecadastro = async (e) => {
+    const handlecadastro = async (e) => {
         e.preventDefault();
 
         const token = localStorage.getItem("token");
@@ -56,9 +53,9 @@ function Formulario({onHeroSaved, setListaHerois}) {
                 }
             });
 
-            setMensagem("Hero registered ✅");
+            setMensagem("Hero registered");
 
-            // ✅ atualiza a lista após cadastrar
+
             const heroisAtualizados = await onHeroSaved();
             setListaHerois(heroisAtualizados || []);
 
@@ -68,7 +65,7 @@ function Formulario({onHeroSaved, setListaHerois}) {
     }
 
 
-   
+
 
 
 
@@ -100,7 +97,7 @@ function Formulario({onHeroSaved, setListaHerois}) {
 
                         onSubmit={handlecadastro}
                         style={formStyle}
-                      
+
                     >
                         <h1 className=' font-bold flex w-full justify-center text-3xl py-5 text-red-900'>Novo Herói</h1>
                         <label className='flex w-full justify-center text-2xl mt-5 text-red-900'>Nome</label>
@@ -116,25 +113,31 @@ function Formulario({onHeroSaved, setListaHerois}) {
                         )}
 
                         <label className='flex w-full justify-center text-2xl mt-5 text-red-900'>Classe</label>
-                        <input
-                            type="text"
-                            name='classe'
-                            placeholder='Classe: Ex - Heroi - EVO - Campeão'
-                            onChange={(e) => setClasse(e.target.value)}
+                        <select
                             className=' border-2 border-red-900 bg-white p-2 rounded w-full mb-2 h-12'
-                        />
+                            name='classe'
+                            onChange={(e) => setClasse(e.target.value)}
+                            required>
+                            <option value="Herói">Herói</option>
+                            <option value="EVO">EVO</option>
+                            <option value="Campeão">Campeão</option>
+                        </select>
                         {erros.classe && (
                             <p className='text-red-500'>{erros.classe._errors}</p>
                         )}
 
                         <label className='flex w-full justify-center text-2xl mt-5 text-red-900'>Status</label>
-                        <input
-                            type="text"
-                            name='status'
-                            placeholder='Ex: online'
-                            onChange={(e) => setStatus(e.target.value)}
+
+                        <select
                             className='border-2 border-red-900 bg-white p-2 rounded w-full mb-2 h-12'
-                        />
+                            name='status'
+                            onChange={(e) => setStatus(e.target.value)}
+                            required>
+                            <option value="Online">Online</option>
+                            <option value="Ausente">Ausente</option>
+                            <option value="Offline">Offline</option>
+                        </select>
+
                         {erros.status && (
                             <p className='text-red-500'>{erros.status._errors}</p>
                         )}
