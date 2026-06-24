@@ -1,7 +1,7 @@
 import Formulario from './components/Formulario';
 import Cadastro from './components/Cadastro';
 import Card from './components/Card';
-import Login from './components/login';
+import Login from './components/LoginTemporario';
 import Profile from './components/Profile';
 
 import axios from "axios";
